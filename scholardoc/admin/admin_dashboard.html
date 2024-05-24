@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard</title>
+  <style>
+    body {
+      font-family: 'Courier New', Courier, monospace;
+      background-color: #F6EAC6;
+      margin: 0;
+      padding: 0;
+    }
+
+    h1 {
+      color: #333;
+      font-family: Broadway;
+      font-weight: bold;
+      font-size: 50px;
+      text-align: center;
+      top: 0;
+      left: 0;
+      right: 0;
+      margin: auto;
+      width: 100%;
+      background-color: #F4E1AB;
+      padding: 40px 0;
+      z-index: 1;
+      transition: transform 0.3s ease;
+    }
+
+    header {
+      padding-top: 0px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    h2 {
+      color: #3C2621;
+      text-align: center;
+      margin-top: 30px;
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 20px;
+    }
+
+    .icons-section {
+      text-align: center;
+    }
+
+    .icon-container {
+      display: flex;
+      justify-content: center;
+      margin-top: 20px;
+    } 
+
+    .icon-wrapper:hover {
+      cursor: pointer;
+      transform: scale(1.1);
+    }
+
+    .icon {
+      margin: 0 15px;
+      width: 170px;
+      height: 170px;
+    }
+
+    .icon-container .icon-wrapper {
+      text-align: center;
+    }
+
+    .icon-container .icon-wrapper p {
+      margin-top: 0px;
+      font-size: 18px;
+    }
+
+    .calendar-heading {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .calendar-title {
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 40px;
+    }
+
+    .calendar-title span {
+      display: inline-block;
+      padding: 0 5px;
+    }
+
+    .calendar-container {
+      margin-top: 50px;
+    }
+
+    .section-title {
+      color: #3C2621;
+      text-align: center;
+      margin-top: 50px;
+      font-family: Lucida calligraphy;
+    }
+
+    .calendar {
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+    }
+
+    .calendar-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .month-year {
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 28px;
+      color: #3C2621;
+    }
+
+    /* Add styles for numbered lists */
+.calendar-table td ol {
+    list-style-type: none; /* Remove default numbering */
+    padding: 0;
+    margin: 0;
+}
+
+.calendar-table td ol li {
+    margin-bottom: 5px;
+    padding-left: 0;
+    font-size: 12px;
+    text-align: center;
+}
+
+/* Adjust spacing between number and text */
+.calendar-table td ol li:before {
+    content: counter(list-item) ".";
+    counter-increment: list-item;
+    margin-right: 5px;
+}
+
+/* Display list items as block-level elements */
+.calendar-table td ol li {
+    display: block;
+}
+
+/* Highlight the event list items */
+.calendar-table td ol li {
+    background-color: #A52A2A; /* Yellow background color */
+    padding: 5px 10px; /* Adjust padding for better visual appearance */
+    border-radius: 5px; /* Add rounded corners */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
+    font-weight: bold; /* Make the text bold */
+    color: #fff; /* Text color */
+}
+
+    .prev-button,
+    .next-button {
+      background-color: #D0A074;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+      font-family: 'Courier New', Courier, monospace;
+    }
+
+    .prev-button:hover,
+    .next-button:hover {
+      background-color: #3C2621;
+    }
+
+    .calendar-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+
+    .day {
+      text-align: center;
+      padding: 10px;
+      color: #3C2621;
+      border: 1px solid #ccc;
+    }
+    
+    td {
+      text-align: center;
+      padding: 20px;
+      color: #3C2621;
+      border: 1px solid #ccc;
+    }
+
+    /*CSS to highlight the selected date cell */
+    td.selected-date {
+      background-color: #3C2621; /* Change the background color */
+      color: #fff; /* Change the text color */
+      font-weight: bold; /* Make the text bold */
+    }
+
+    td:hover {
+      cursor: pointer;
+      background-color: #D0A074;
+    }
+
+    .hide-heading {
+      transform: translateY(-100%);
+      opacity: 0;
+    }
+
+    .edit-icon {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background-color: #D0A074;
+      color: #fff;
+      width: 50px;
+      height: 50px;
+      line-height: 50px;
+      text-align: center;
+      border-radius: 50%;
+      font-size: 24px;
+      cursor: pointer;
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1;
+      left: 0;
+      top: 0;
+      width: 40%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgb(0,0,0);
+      background-color: rgba(0,0,0,0.4);
+      padding-top: 60px;
+    }
+
+    .modal-content {
+      background-color: #fefefe;
+      margin: 5% auto;
+      padding: 20px;
+      border: 1px solid #888;
+      width: 80%;
+    }
+
+    .close {
+      color: #aaa;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+    }
+
+    .close:hover,
+    .close:focus {
+      color: black;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    #editForm {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    #editForm label {
+      margin-bottom: 10px;
+    }
+
+    #editForm textarea {
+      width: 100%;
+      resize: none;
+    }
+
+    #editForm button {
+      background-color: #D0A074;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 4px;
+      cursor: pointer;
+      margin-top: 20px;
+    }
+
+    #editForm button:hover {
+      background-color: #3C2621;
+    }
+
+    ol {
+      list-style-type: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    ol li {
+      margin-bottom: 5px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <h1>Admin Dashboard</h1>
+  </header>
+
+  <!-- Main Content -->
+  <main>
+    <!-- Icons Section -->
+    <section class="icons-section">
+      <h2>Manage</h2>
+      <div class="icon-container">
+        <!-- Icon for Student -->
+        <div class="icon-wrapper">
+          <a href="studentsIcon.html">
+          <img src="images/studenticon.png" alt="Student" class="icon">
+        </a>
+          <p>Students</p>
+        </div>
+        <!-- Icon for Disbursement -->
+        <div class="icon-wrapper">
+          <a href="disbursements.php">
+          <img src="images/disbursements.png" alt="Disbursement" class="icon">
+          </a>
+          <p>Disbursements</p>
+        </div>
+        <!-- Icon for Documents -->
+        <div class="icon-wrapper">
+          <a href="doc.php">
+          <img src="images/documents.png" alt="Documents" class="icon">
+        </a>
+          <p>Documents</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Calendar Section -->
+    <section class="calendar-container">
+      <!-- Floating edit icon -->
+      <div class="edit-icon" onclick="openEditModal()">✎</div>
+
+      <!-- Calendar -->
+      <div class="calendar">
+        <!-- Calendar Heading -->
+        <div class="calendar-heading">
+          <div class="calendar-title">
+            <span>C</span><span>A</span><span>L</span><span>E</span><span>N</span><span>D</span><span>A</span><span>R</span>
+          </div>
+        </div>
+        <!-- Calendar Content -->
+        <div class="calendar">
+          <div class="calendar-header">
+            <button class="prev-button" onclick="previousMonth()">Previous</button>
+            <h3 id="month-year" class="month-year"></h3>
+            <button class="next-button" onclick="nextMonth()">Next</button>
+          </div>
+          <table class="calendar-table">
+            <thead>
+              <tr>
+                <th class="day">Sun</th>
+                <th class="day">Mon</th>
+                <th class="day">Tue</th>
+                <th class="day">Wed</th>
+                <th class="day">Thu</th>
+                <th class="day">Fri</th>
+                <th class="day">Sat</th>
+              </tr>
+            </thead>
+            <tbody id="calendar-body" class="calendar-body">
+              <!-- Calendar dates will be dynamically generated here -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Edit Modal -->
+  <div id="editModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeEditModal()">&times;</span>
+      <h2>Add Note/Event</h2>
+      <form id="editForm" action="../admin/save_events.php" method="post">
+    <label for="eventNote">Note/Event:</label><br>
+    <textarea id="eventNote" name="eventNote" rows="4" cols="50" required></textarea><br><br>
+    <input type="hidden" id="eventDate" name="eventDate" value=""> <!-- Hidden field to store selected date -->
+    <button type="submit">Save</button>
+</form>
+
+      <div id="eventList"></div> <!-- Container to display added events -->
+    </div>
+  </div>
+
+  <!-- Include any necessary JavaScript files -->
+  <script>
+    // JavaScript for the calendar functionality
+
+    // Function to update the event list
+function updateEventList(events) {
+    const eventList = document.getElementById('eventList');
+    eventList.innerHTML = ''; // Clear existing content
+    for (const date in events) {
+        if (events.hasOwnProperty(date)) {
+            const eventsForDate = events[date];
+            eventsForDate.forEach(event => {
+                const listItem = document.createElement('li');
+                listItem.textContent = event;
+                eventList.appendChild(listItem);
+            });
+        }
+    }
+}
+
+    // Object to store events
+    var events = {};
+    var selectedDate = null;
+
+    // Function to generate the calendar for a specific month and year
+    function generateCalendar(month, year) {
+      const calendarBody = document.getElementById("calendar-body");
+      const monthYearElement = document.getElementById("month-year");
+      const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
+      // Get the number of days in the month
+      const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+      // Get the first day of the month
+      const firstDayOfMonth = new Date(year, month, 1).getDay();
+
+      // Clear previous calendar content
+      calendarBody.innerHTML = '';
+
+      // Start building the calendar
+      let date = 1;
+      for (let i = 0; i < 6; i++) {
+        // Create a new row
+        const row = document.createElement('tr');
+
+        // Create cells for each day of the week
+        for (let j = 0; j < 7; j++) {
+          // Create a new cell
+          const cell = document.createElement('td');
+
+          // If we haven't reached the end of the month and it's the correct day of the week, add the date
+          if ((i === 0 && j < firstDayOfMonth) || date > daysInMonth) {
+            // Add an empty cell before the start of the month or after the end of the month
+            cell.textContent = '';
+          } else {
+            // Add the date to the cell
+            const dateString = `${year}-${month + 1}-${date < 10 ? '0' + date : date}`; // Format date as YYYY-MM-DD
+            cell.textContent = date;
+            cell.dataset.date = dateString; // Add date data attribute
+            date++;
+
+            // Check if there are events for this date
+        if (events[dateString] && events[dateString].length > 0) {
+          // Create a list to display events
+          const eventList = document.createElement('ol');
+          // Add each event as a list item
+          events[dateString].forEach(event => {
+            const eventItem = document.createElement('li');
+            const label = document.createElement('label');
+            label.textContent = event;
+            eventItem.appendChild(label);
+            // Append the list item to the event list
+            eventList.appendChild(eventItem);
+          });
+          // Append the list of events to the cell
+          cell.appendChild(eventList);
+        }
+      }
+
+      // Append the cell to the row
+      row.appendChild(cell);
+    }
+
+    // Append the row to the calendar body if it's not empty
+    if (row.textContent.trim().length > 0) {
+      calendarBody.appendChild(row);
+    }
+  }
+
+  // Update the month and year display
+  monthYearElement.textContent = `${monthNames[month]} ${year}`;
+}
+
+    // Function to display events in the edit modal
+function displayEvents() {
+    const eventListContainer = document.getElementById("eventList");
+    eventListContainer.innerHTML = ""; // Clear previous content
+
+    // Loop through each date in events object
+    for (const [date, eventArray] of Object.entries(events)) {
+        // Only display events if there are any
+        if (eventArray.length > 0) {
+            const dateHeader = document.createElement("h3");
+            dateHeader.textContent = `Events on ${date}:`;
+            eventListContainer.appendChild(dateHeader);
+            // Loop through each event for the current date
+            eventArray.forEach(event => {
+                const eventItem = document.createElement("p");
+                eventItem.textContent = event;
+                eventListContainer.appendChild(eventItem);
+                // Add delete button for each event
+                const deleteButton = document.createElement("button");
+                deleteButton.textContent = "Delete";
+                deleteButton.onclick = function() {
+                    deleteEvent(date, event);
+                };
+                eventListContainer.appendChild(deleteButton);
+            });
+        }
+    }
+}
+
+    // Function to display events in the calendar
+    function displayEventsInCalendar() {
+    // Loop through each date in events object
+    for (const [date, eventArray] of Object.entries(events)) {
+        // Get the cell corresponding to the date
+        const cell = document.querySelector(`td[data-date="${date}"]`);
+        if (cell) {
+            // Check if there are already events for this date in the cell
+            const eventList = cell.querySelector("ol");
+            if (eventList) {
+                // Clear existing events if any
+                eventList.innerHTML = "";
+                // Add each event as a list item
+                eventArray.forEach(event => {
+                    const listItem = document.createElement("li");
+                    listItem.textContent = event;
+                    eventList.appendChild(listItem);
+                });
+            } else {
+                // Create a new list to display events
+                const newEventList = document.createElement("ol");
+                // Add each event as a list item
+                eventArray.forEach(event => {
+                    const listItem = document.createElement("li");
+                    listItem.textContent = event;
+                    newEventList.appendChild(listItem);
+                });
+                // Append the list to the cell
+                cell.appendChild(newEventList);
+              }
+            }
+        }
+    }
+
+
+
+
+    // Function to delete an event
+function deleteEvent(date, event) {
+    const index = events[date].indexOf(event);
+    if (index !== -1) {
+        events[date].splice(index, 1);
+        // Display updated events
+        displayEvents();
+        // Regenerate the calendar to reflect the changes
+        generateCalendar(currentMonth, currentYear);
+        // Save events to localStorage
+        localStorage.setItem("events", JSON.stringify(events));
+
+        // Send AJAX request to delete event from the database
+        const formData = new FormData();
+        formData.append("eventDate", date);
+        formData.append("eventNote", event);
+
+        fetch("delete_event.php", {
+            method: "POST",
+            body: formData
+        })
+            .then(response => {
+                if (response.ok) {
+                    console.log("Event deleted successfully from the database");
+                } else {
+                    console.error("Failed to delete event from the database");
+                }
+            })
+            .catch(error => {
+                console.error("Error:", error);
+            });
+    }
+}
+
+// Load events from localStorage when the page loads
+document.addEventListener("DOMContentLoaded", function () {
+    // Retrieve events from localStorage
+    const storedEvents = localStorage.getItem("events");
+    // If there are stored events, parse and assign them to the events object
+    if (storedEvents) {
+        events = JSON.parse(storedEvents);
+        // Display the events in the modal
+        displayEvents();
+        // Display the events in the calendar
+        displayEventsInCalendar();
+    }
+});
+
+
+// Function to handle form submission
+document.getElementById("editForm").addEventListener("submit", function(event) {
+    event.preventDefault();
+    if (selectedDate) {
+        const eventNote = document.getElementById("eventNote").value;
+        const eventDate = selectedDate;
+
+        // Create a FormData object to send data via AJAX
+        const formData = new FormData();
+        formData.append("eventNote", eventNote);
+        formData.append("eventDate", eventDate);
+
+        // Send an asynchronous POST request to your PHP script
+        fetch("save_events.php", {
+            method: "POST",
+            body: formData
+        })
+        .then(response => {
+            if (response.ok) {
+                // Optionally, handle success response
+                console.log("Event saved successfully");
+                // Add the event to the events object
+                if (!events[selectedDate]) {
+                    events[selectedDate] = [];
+                }
+                events[selectedDate].push(eventNote);
+                // Save events to localStorage
+                localStorage.setItem("events", JSON.stringify(events));
+                // Clear previous event list in the modal
+                const eventListContainer = document.getElementById("eventList");
+                eventListContainer.innerHTML = "";
+                // Display the events in the modal
+                displayEvents();
+                // Update the corresponding cell in the calendar to display the event
+                const cell = document.querySelector(`td[data-date="${selectedDate}"]`);
+                if (cell) {
+                    // Check if there are already events for this date in the cell
+                    const eventList = cell.querySelector("ol");
+                    if (eventList) {
+                        // Create a new list item for the event
+                        const eventItem = document.createElement("li");
+                        eventItem.textContent = eventNote;
+                        // Append the event to the list
+                        eventList.appendChild(eventItem);
+                    } else {
+                        // Create a new list to display events
+                        const newEventList = document.createElement("ol");
+                        // Create a list item for the event
+                        const eventItem = document.createElement("li");
+                        eventItem.textContent = eventNote;
+                        // Append the event to the list
+                        newEventList.appendChild(eventItem);
+                        // Append the list to the cell
+                        cell.appendChild(newEventList);
+                    }
+                }
+                // Close the modal
+                closeEditModal();
+                // Regenerate the calendar to reflect the changes
+                generateCalendar(currentMonth, currentYear);
+            } else {
+                // Optionally, handle error response
+                console.error("Failed to save event");
+            }
+        })
+        .catch(error => {
+            console.error("Error:", error);
+        });
+    }
+});
+
+
+
+
+
+    // Function to open the edit modal
+    function openEditModal() {
+      document.getElementById("editModal").style.display = "block";
+    }
+
+    // Function to close the edit modal
+    function closeEditModal() {
+      document.getElementById("editModal").style.display = "none";
+    }
+
+
+  // Function to navigate to the previous month
+  function previousMonth() {
+  currentMonth--;
+  if (currentMonth < 0) {
+    currentMonth = 11;
+    currentYear--;
+    }
+  generateCalendar(currentMonth, currentYear);
+  }
+
+  // Function to navigate to the next month
+  function nextMonth() {
+  currentMonth++;
+  if (currentMonth > 11) {
+    currentMonth = 0;
+    currentYear++;
+  }
+  generateCalendar(currentMonth, currentYear);
+  }
+
+
+
+
+
+    // Function to handle cell click and select the date
+document.addEventListener("click", function(event) {
+    const target = event.target;
+    if (target.tagName === "TD" && target.dataset.date) {
+        // Remove previously selected date class
+        const previousSelectedCell = document.querySelector(".selected-date");
+        if (previousSelectedCell) {
+            previousSelectedCell.classList.remove("selected-date");
+        }
+        // Set selected date
+        selectedDate = target.dataset.date;
+        // Populate hidden field with selected date
+        document.getElementById("eventDate").value = selectedDate;
+        // Highlight selected cell
+        target.classList.add("selected-date");
+    }
+});
+
+      // Get the current date
+      const currentDate = new Date();
+      let currentMonth = currentDate.getMonth();
+      let currentYear = currentDate.getFullYear();
+
+    // Generate the calendar for the current month and year
+    generateCalendar(currentMonth, currentYear);
+    
+  </script>
+</body>
+</html>

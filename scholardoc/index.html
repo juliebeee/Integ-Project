@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login Page</title>
+  <style>
+    /* Body background settings */
+    body {
+      background-image: url(../scholardoc/images/gasan.png);
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-attachment: fixed;
+      background-color: #F4E1AB;
+      font-family: Arial, sans-serif; 
+      margin: 0; 
+      padding: 0; 
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh; 
+      text-align: center; 
+    }
+    
+   
+    .content {
+      background-color: rgba(230, 230, 230, 0.4); 
+      border-radius: 20px;
+      padding: 20px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); 
+      max-width: 800px; 
+      width: 100%; 
+      }
+
+    /* Heading styles */
+    h1 {
+      color: #A52A2A;
+      margin-top: 10px; 
+      font-size: 130px;
+      font-family: Broadway;
+      font-weight: bolder;
+      text-shadow: -1px -1px 0 #000,  
+                1px -1px 0 #000,
+               -1px 1px 0 #000,
+                1px 1px 0 #000;
+    }
+
+    h2 {
+      color: #3C2621;
+      margin-top: 20px; 
+      font-family: Lucida Calligraphy;
+      font-size: 30px;
+    }
+    
+   
+    p {
+      color: #000; 
+      margin-top: 30px; 
+      font-family: Lucida Calligraphy;
+      font-weight: bold;
+    }
+
+    /* Icon container */
+    .icon-container {
+      display: flex;
+      justify-content: center;
+      gap: 50px; 
+      margin-top: 20px;
+    }
+    
+    /* Button icon styles */
+    .button-icon {
+      display: inline-block;
+      padding: 10px;
+      border: 2px solid #3C2621;
+      border-radius: 50px;
+      background-color: #fff;
+      cursor: pointer;
+      transition: background-color 0.3s, transform 0.3s;
+    }
+
+    .button-icon:hover {
+      background-color: #E1CDBC;
+      transform: scale(1.05);
+    }
+    
+    /* Icon styles */
+    .icon {
+      width: 200px;
+      height: 220px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Main content container -->
+  <div class="content">
+    <!-- Landing page content -->
+    <h2>Welcome to</h2>
+    <h1>ScholarDoc</h1>
+    
+    <!-- Icon container -->
+    <div class="icon-container">
+      <!-- Icon for Administrator -->
+      <div class="button-icon" id="adminButton">
+        <img src="images/admin.jpg" alt="Administrator" class="icon" id="adminIcon">
+      </div>
+      
+      <!-- Icon for Student -->
+      <div class="button-icon" id="studentButton">
+        <img src="images/student.png" alt="Student" class="icon" id="studentIcon">
+      </div>
+    </div>
+
+    <p>Please select your role</p>
+  </div>
+
+  <!-- JavaScript to handle icon clicks -->
+  <script>
+    // Get references to the buttons
+    const adminButton = document.getElementById('adminButton');
+    const studentButton = document.getElementById('studentButton');
+
+    // Add click event listeners to the buttons
+    adminButton.addEventListener('click', function() {
+      // Redirect to the administrator login page
+      window.location.href = '../scholardoc/login/admin_login.php';
+    });
+
+    studentButton.addEventListener('click', function() {
+      // Redirect to the student login page
+      window.location.href = '../scholardoc/login/student_login.php';
+    });
+  </script>
+</body>
+</html>

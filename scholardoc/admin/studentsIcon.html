@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Year Selection</title>
+  <style>
+    body {
+      font-family: 'Courier New', Courier, monospace;
+      background-color: #F6EAC6;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      position: relative;
+    }
+
+    .admin-dashboard {
+    position: absolute;
+    top: 0;
+    left: 0; /* Change left position to 0 */
+    right: 0; /* Change right position to 0 */
+    font-size: 24px;
+    color: #3C2621;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+ 
+
+    h1 {
+      color: #333;
+      font-family: Broadway;
+      font-weight: bold;
+      font-size: 50px;
+      text-align: center;
+      top: 0;
+      left: 0;
+      right: 0;
+      margin: auto;
+      width: 100%;
+      background-color: #F4E1AB;
+      padding: 40px 0;
+      z-index: 1;
+      transition: transform 0.3s ease;
+    }
+
+    h2 {
+      color: #3C2621;
+      text-align: center;
+      margin-top: 120px;
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 20px;
+    }
+
+    .button-container {
+      text-align: center;
+      margin-top: 30px;
+    } 
+
+    .button {
+      width: 200px;
+      height: 100px;
+      background-color: #D0A074;
+      border: none;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    p {
+      font-size: 24px;
+      color: #fff;
+    }
+
+    .button:hover {
+      
+      cursor: pointer;
+      transform: scale(1.1);
+    }
+
+    .button:nth-child(2) {
+      background-color: #A52A2A;
+    }
+
+    .button:nth-child(3) {
+      background-color: #0A0A2A;
+    }
+
+    .back-button {
+      margin-top: 20px;
+      background-color: #D0A074;
+      border: none;
+      border-radius: 8px;
+      padding: 10px 20px;
+      font-size: 18px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+       font-family: 'Courier New', Courier, monospace;
+    }
+
+    .back-button:hover {
+      background-color: #A52A2A;
+      cursor: pointer;
+      transform: scale(1.1);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Admin Dashboard -->
+  <header class="admin-dashboard">
+    <h1>Admin Dashboard</h1>
+  </header>
+
+  <!-- Header -->
+  <h2>Year Selection</h2>
+
+  <!-- Main Content -->
+  <main>
+    <!-- Button Section -->
+    <section class="button-container">
+      <!-- Button for 2nd Year -->
+      <div class="button" onclick="redirectToYear('secondyear.php')">
+        <p>2nd Year</p>
+      </div>
+      <!-- Button for 3rd Year -->
+      <div class="button" onclick="redirectToYear('thirdyear.php')">
+        <p>3rd Year</p>
+      </div>
+      <!-- Button for 4th Year -->
+      <div class="button" onclick="redirectToYear('fourthyear.php')">
+        <p>4th Year</p>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    // Function to redirect to respective year page
+    function redirectToYear(year) {
+        // Redirect to the respective year page
+        window.location.href = year;
+    }
+</script>
+
+  <button class="back-button" onclick="goBack()">Back</button>
+
+<script>
+  // Function to navigate back to the previous page
+  function goBack() {
+    window.history.back();
+  }
+</script>
+</body>
+</html>

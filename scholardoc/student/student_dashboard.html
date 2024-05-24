@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Dashboard</title>
+  <style>
+    body {
+      font-family: 'Courier New', Courier, monospace;
+      background-color: #F6EAC6;
+      margin: 0;
+      padding: 0;
+    }
+
+    h1 {
+      color: #333;
+      font-family: Broadway;
+      font-weight: bold;
+      font-size: 50px;
+      text-align: center;
+      top: 0;
+      left: 0;
+      right: 0;
+      margin: auto;
+      width: 100%;
+      background-color: #F4E1AB;
+      padding: 40px 0;
+      z-index: 1;
+      transition: transform 0.3s ease;
+    }
+
+    header {
+      padding-top: 0px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    h2 {
+      color: #3C2621;
+      text-align: center;
+      margin-top: 30px;
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 20px;
+    }
+
+    .icons-section {
+      text-align: center;
+    }
+
+    .icon-container {
+      display: flex;
+      justify-content: center;
+      margin-top: 20px;
+    } 
+
+    .icon-wrapper:hover {
+      cursor: pointer;
+      transform: scale(1.1);
+    }
+
+    .icon {
+      margin: 0 15px;
+      width: 170px;
+      height: 170px;
+    }
+
+    .icon-container .icon-wrapper {
+      text-align: center;
+    }
+
+    .icon-container .icon-wrapper p {
+      margin-top: 0px;
+      font-size: 18px;
+    }
+
+    .calendar-heading {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .calendar-title {
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 40px;
+    }
+
+    .calendar-title span {
+      display: inline-block;
+      padding: 0 5px;
+    }
+
+    .calendar-container {
+      margin-top: 50px;
+    }
+
+    .section-title {
+      color: #3C2621;
+      text-align: center;
+      margin-top: 50px;
+      font-family: Lucida calligraphy;
+    }
+
+    .calendar {
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+    }
+
+    .calendar-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .month-year {
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 28px;
+      color: #3C2621;
+    }
+
+    .prev-button,
+    .next-button {
+      background-color: #D0A074;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+      font-family: 'Courier New', Courier, monospace;
+    }
+
+    .prev-button:hover,
+    .next-button:hover {
+      background-color: #3C2621;
+    }
+
+    .schedule-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+
+    .schedule-table td {
+      text-align: center;
+      padding: 15px;
+      color: #3C2621;
+      border: 1px solid #ccc;
+      width: 5px;
+    }
+
+    .schedule-table th {
+      background-color: #3C2621;
+      color: #fff;
+      font-weight: bold;
+      text-align: center;
+      padding: 20px;
+      border: 1px solid #ccc;
+    }
+
+    .schedule-table td:hover {
+      cursor: pointer;
+      background-color: #D0A074;
+    }
+
+    .hide-heading {
+      transform: translateY(-100%);
+      opacity: 0;
+    }
+
+
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <h1>Student Dashboard</h1>
+  </header>
+
+  <!-- Main Content -->
+  <main>
+    <!-- Icons Section -->
+    <section class="icons-section">
+       <h2>Manage</h2>
+      <div class="icon-container">
+        <!-- Icon for Student -->
+        <div class="icon-wrapper">
+          <a href="../student/profile.php">
+          <img src="images/prof.png" alt="Student" class="icon">
+        </a>
+          <p>Profile</p>
+        </div>
+        <!-- Icon for Disbursement -->
+        <div class="icon-wrapper">
+          <a href="../student/payout.php">
+          <img src="images/disbursements.png" alt="Disbursement" class="icon">
+          </a>
+          <p>Disbursements</p>
+        </div>
+        <!-- Icon for Documents -->
+        <div class="icon-wrapper">
+          <a href="../student/upload.php">
+          <img src="images/documents.png" alt="Documents" class="icon">
+        </a>
+          <p>Documents</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Calendar Section -->
+    <section class="calendar-container">
+      <!-- Calendar -->
+      <div class="calendar">
+        <!-- Calendar Heading -->
+        <div class="calendar-heading">
+          <div class="calendar-title">
+            <span>C</span><span>A</span><span>L</span><span>E</span><span>N</span><span>D</span><span>A</span><span>R</span>
+          </div>
+        </div>
+         
+        <!-- Calendar Content -->
+        <div class="calendar">
+          <div class="calendar-header">
+            <button class="prev-button" onclick="prevMonth()">&#10094; Previous</button>
+            <h3 id="month-year" class="month-year"></h3>
+            <button class="next-button" onclick="nextMonth()">Next &#10095;</button>
+          </div>
+           <!-- Schedule Table -->
+          <table id="schedule-table" class="schedule-table">
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Events</th>
+              </tr>
+            </thead>
+            <tbody id="schedule-table-body"></tbody>
+          </table>
+          </div>
+        </div>
+      </section>
+  </main>
+
+  <!-- Include any necessary JavaScript files -->
+  <script>
+  // JavaScript for the calendar functionality
+  // The calendar will be read-only for students, so the editing functionality is removed
+   function toggleLayout() {
+      const iconContainer = document.querySelector('.icon-container');
+      iconContainer.classList.toggle('vertical-layout');
+    }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+  
+    const currentDate = new Date();
+    let currentMonth = currentDate.getMonth();
+    let currentYear = currentDate.getFullYear();
+  
+    fetchEvents();
+  
+    function fetchEvents() {
+  const url = `../student/fetch_events.php?month=${currentMonth + 1}&year=${currentYear}`;
+  
+  fetch(url)
+    .then(response => response.json())
+    .then(events => {
+       console.log('Fetched events:', events);
+      generateCalendarWithEvents(events);
+      updateMonthYearIndicator(); // Update the month and year indicator
+    })
+    .catch(error => console.error('Error fetching events:', error));
+}
+
+function generateCalendarWithEvents(events) {
+  const scheduleTableBody = document.getElementById("schedule-table-body");
+  scheduleTableBody.innerHTML = '';
+
+  for (const date in events) {
+    if (events.hasOwnProperty(date)) {
+      const eventDate = new Date(date);
+      if (eventDate.getMonth() === currentMonth && eventDate.getFullYear() === currentYear) {
+        const month = monthNames[eventDate.getMonth()];
+        const day = eventDate.getDate();
+        const year = eventDate.getFullYear();
+
+        const formattedDate = `${month} ${day}, ${year}`; // Format the date
+        
+        const row = document.createElement('tr');
+
+        const dateCell = document.createElement('td');
+        dateCell.textContent = formattedDate; // Set the formatted date
+        row.appendChild(dateCell);
+
+        const eventNoteCell = document.createElement('td');
+        const eventsArray = events[date];
+        eventsArray.forEach(event => {
+          const eventSpan = document.createElement('span');
+          eventSpan.textContent = event;
+          eventNoteCell.appendChild(eventSpan);
+          eventNoteCell.appendChild(document.createElement('br'));
+        });
+        row.appendChild(eventNoteCell);
+
+        scheduleTableBody.appendChild(row);
+        
+        console.log('Generated row:', row); // Log the generated row
+      }
+    }
+  }
+}
+
+
+
+
+  
+    function prevMonth() {
+      currentMonth -= 1;
+      if (currentMonth < 0) {
+        currentMonth = 11;
+        currentYear -= 1;
+      }
+      fetchEvents();
+    }
+  
+    function nextMonth() {
+      currentMonth += 1;
+      if (currentMonth > 11) {
+        currentMonth = 0;
+        currentYear += 1;
+      }
+      fetchEvents();
+    }
+
+    // Update the month and year indicator
+    function updateMonthYearIndicator() {
+      document.getElementById("month-year").textContent = `${monthNames[currentMonth]} ${currentYear}`;
+    }
+  
+    // Event listeners for previous and next buttons
+    document.querySelector('.prev-button').addEventListener('click', () => {
+      prevMonth();
+      updateMonthYearIndicator(); // Update the month and year indicator when clicking previous
+    });
+    document.querySelector('.next-button').addEventListener('click', () => {
+      nextMonth();
+      updateMonthYearIndicator(); // Update the month and year indicator when clicking next
+    });
+
+    // Initial update of month and year indicator
+    updateMonthYearIndicator();
+});
+
+</script>
+
+
+</body>
+</html>
